@@ -56,8 +56,7 @@ namespace SuperHerosProject.Controllers
         // GET: SuperHero/Edit/5
         public ActionResult Edit(int id)
         {
-            SuperHero superHero = new SuperHero();
-            superHero = context.SuperHeros.Find(id);
+            SuperHero superHero = context.SuperHeros.Find(id);
             return View(superHero);
         }
 
@@ -70,6 +69,13 @@ namespace SuperHerosProject.Controllers
                 //Natalie TODO
                 //I think its a Bind function
                 //context.SuperHeros.(superHero);
+                //NATALIE: SuperHero heroFromDb; // query for me!
+                SuperHero heroFromDb = context.SuperHeros.Find(id);
+                heroFromDb.Name = superHero.Name;
+                heroFromDb.AlterEgo = superHero.AlterEgo;
+                heroFromDb.PrimarySuperHeroAbility = superHero.PrimarySuperHeroAbility;
+                heroFromDb.SecondarySuperHeroAbility = superHero.SecondarySuperHeroAbility;
+                heroFromDb.CatchPhrase = superHero.CatchPhrase;
                 context.SaveChanges();
                 return RedirectToAction("Index");
             }
@@ -82,17 +88,19 @@ namespace SuperHerosProject.Controllers
         // GET: SuperHero/Delete/5
         public ActionResult Delete(int id)
         {
-            SuperHero superHero = new SuperHero();
+            SuperHero superHero = context.SuperHeros.Find(id);
             return View(superHero);
         }
 
         // POST: SuperHero/Delete/5
-        [HttpPost]
+        [HttpPost,ActionName("Delete")]
         public ActionResult Delete(int id, SuperHero superHero)
         {
             try
             {
-                context.SuperHeros.Remove(superHero);
+                //NATALIE: SuperHero heroFromDb = query for me!;
+                SuperHero heroFromDb = context.SuperHeros.Find(id);
+                context.SuperHeros.Remove(heroFromDb);
                 context.SaveChanges();
                 return RedirectToAction("Index");
             }
